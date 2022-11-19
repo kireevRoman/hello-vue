@@ -1,30 +1,34 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <h1>Простой кликер:</h1>
+    <button type="button" v-on:click="addClick">Это кнопка</button>
+    <h2>На кнопку кликнули {{ clicks }} раз</h2>
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+export default {
+  data() {
+    return{
+      clicks: 0
+    }
+  },
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  methods: {
+    addClick() {
+      this.clicks += 1
     }
   }
+}
+</script>
+
+<style lang="scss" scoped>
+button {
+  padding: 12px 24px;
+  border: 2px solid blueviolet;
+  color: blueviolet;
+  background: #FFFFFF;
+  font-size: 18px;
+  cursor: pointer;
 }
 </style>
