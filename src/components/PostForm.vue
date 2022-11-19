@@ -50,19 +50,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/vars.scss';
 .post-form {
   display: flex;
   flex-direction: column;
   padding: 20px;
   background: #FFFFFF;
-  border-radius: 8px;
+  border-radius: $defaultRadius;
 
   margin-bottom: 40px;
 
   > input, > textarea {
     padding: 10px 16px;
-    border: 1px solid #7C7C7C;
-    border-radius: 4px;
+    border: 1px solid $secondaryColor;
+    border-radius: $smallRadius;
+    color: $primaryColor;
     font-size: 16px;
   }
 
@@ -73,7 +75,7 @@ export default {
     background: blueviolet;
     font-size: 18px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: $smallRadius;
     margin-left: auto;
   }
 
