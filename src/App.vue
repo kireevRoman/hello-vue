@@ -2,17 +2,17 @@
   <main class="main-container">
     <div class="content">
 
-      <form class="post-form" v-on:submit.prevent="createPost">
+      <form class="post-form" @submit.prevent="createPost">
         <h2>Создание поста</h2>
 
-        <input v-bind:value="form.title"
-               v-on:input="form.title = $event.target.value"
+        <input :value="form.title"
+               @input="form.title = $event.target.value"
                type="text"
                placeholder="Название поста"
                required>
 
-        <textarea v-bind:value="form.body"
-                  v-on:input="form.body = $event.target.value"
+        <textarea :value="form.body"
+                  @input="form.body = $event.target.value"
                   placeholder="Описание поста"
                   rows="4"
                   required/>
@@ -22,7 +22,14 @@
 
       <div class="post-list">
         <div class="post-item" v-for="post in posts" :key="`post-${post.id}`">
+          <button type="button"
+                  class="post-item__button-remove"
+                  @click="removePost(post.id)">
+            <img src="@/assets/svg/remove.svg" alt="Иконка удаления поста">
+          </button>
+
           <img class="post-item__image" src="https://unsplash.it/800/800" alt="Превью статьи">
+
           <div class="post-item__title">
             {{ post.title }}
           </div>
@@ -70,12 +77,15 @@ export default {
         id: Date.now(),
         ...this.form
       };
-      this.posts.push(newPost);
+      this.posts.unshift(newPost);
 
       this.form = {
         title: '',
         body: ''
       }
+    },
+    removePost(postId) {
+      this.posts = this.posts.filter(post => post.id !== postId)
     }
   }
 }
@@ -150,6 +160,30 @@ export default {
   margin-bottom: 40px;
   background-color: #FFFFFF;
   border-radius: 8px;
+  position: relative;
+
+  .post-item__button-remove {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 4px;
+    border: none;
+
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+
+    cursor: pointer;
+
+    transition: opacity 0.3s ease-out;
+  }
+
+  &:hover .post-item__button-remove {
+    opacity: 1;
+  }
 
   .post-item__image {
     height: 200px;
