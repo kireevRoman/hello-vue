@@ -2,6 +2,24 @@
   <main class="main-container">
     <div class="content">
 
+      <form class="post-form" v-on:submit.prevent="createPost">
+        <h2>Создание поста</h2>
+
+        <input v-bind:value="form.title"
+               v-on:input="form.title = $event.target.value"
+               type="text"
+               placeholder="Название поста"
+               required>
+
+        <textarea v-bind:value="form.body"
+                  v-on:input="form.body = $event.target.value"
+                  placeholder="Описание поста"
+                  rows="4"
+                  required/>
+
+        <button type="submit">Создать пост</button>
+      </form>
+
       <div class="post-list">
         <div class="post-item" v-for="post in posts" :key="`post-${post.id}`">
           <img class="post-item__image" src="https://unsplash.it/800/800" alt="Превью статьи">
@@ -39,16 +57,33 @@ export default {
           body: ' Текст статьи в несколько строк.  Текст статьи в несколько строк.  Текст статьи в несколько строк.'
         },
 
-      ]
+      ],
+      form: {
+        title: '',
+        body: ''
+      }
     }
   },
-  methods: {}
+  methods: {
+    createPost() {
+      const newPost = {
+        id: Date.now(),
+        ...this.form
+      };
+      this.posts.push(newPost);
+
+      this.form = {
+        title: '',
+        body: ''
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 * {
-  font-family: Arial,serif;
+  font-family: Arial, serif;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -69,6 +104,39 @@ export default {
   background: #f0f1f5;
 }
 
+.post-form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 8px;
+
+  margin-bottom: 40px;
+
+  > input, > textarea {
+    padding: 10px 16px;
+    border: 1px solid #7C7C7C;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  > button {
+    padding: 12px 24px;
+    border: 1px solid blueviolet;
+    color: #FFFFFF;
+    background: blueviolet;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: auto;
+  }
+
+  > *:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+}
+
 .post-list {
   display: flex;
   flex-wrap: wrap;
@@ -76,15 +144,17 @@ export default {
 }
 
 .post-item {
+  width: 48%;
   display: flex;
   flex-direction: column;
-  width: 48%;
   margin-bottom: 40px;
   background-color: #FFFFFF;
+  border-radius: 8px;
 
   .post-item__image {
     height: 200px;
     object-fit: cover;
+    border-radius: 8px 8px 0 0;
   }
 
   .post-item__title {
@@ -100,12 +170,4 @@ export default {
   }
 }
 
-button {
-  padding: 12px 24px;
-  border: 2px solid blueviolet;
-  color: blueviolet;
-  background: #FFFFFF;
-  font-size: 18px;
-  cursor: pointer;
-}
 </style>
