@@ -8,7 +8,7 @@
       <div class="action-panel">
         <app-input class="action-panel__search"
                    type="search"
-                   v-model="search"
+                   v-model.trim="search"
                    placeholder="Поиск по названию"/>
 
         <app-button @click="dialogVisible = true">Добавить пост</app-button>
@@ -23,11 +23,9 @@
 <script>
 import PostForm from "@/components/PostForm";
 import PostList from "@/components/PostList";
-import AppDialog from "@/components/UI/AppDialog";
-import AppInput from "@/components/UI/AppInput";
 
 export default {
-  components: {AppInput, AppDialog, PostList, PostForm},
+  components: {PostList, PostForm},
   data() {
     return {
       search: '',
