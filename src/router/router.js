@@ -3,6 +3,7 @@ import PostPage from "@/pages/PostPage";
 import AboutPage from "@/pages/AboutPage";
 import MainPage from "@/pages/MainPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import PostDetailPage from "@/pages/PostDetailPage";
 
 const routes = [
     {
@@ -14,6 +15,11 @@ const routes = [
         path: '/posts',
         name: 'posts',
         component: PostPage
+    },
+    {
+        path: '/posts/:id',
+        name: 'post-detail',
+        component: PostDetailPage
     },
     {
         path: '/about',

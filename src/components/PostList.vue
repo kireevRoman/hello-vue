@@ -5,6 +5,7 @@
         <post-item v-for="post in posts"
                    :key="`post-${post.id}`"
                    :post="post"
+                   @click="$router.push({name: 'post-detail', params: {id: post.id}})"
                    @removePost="$emit('removePost', $event)"/>
       </transition-group>
     </template>

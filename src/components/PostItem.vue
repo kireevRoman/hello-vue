@@ -2,7 +2,7 @@
   <div class="post-item">
     <button type="button"
             class="post-item__button-remove"
-            @click="removePost(post.id)">
+            @click.stop="removePost(post.id)">
       <img src="@/assets/svg/remove.svg" alt="Иконка удаления поста">
     </button>
 
