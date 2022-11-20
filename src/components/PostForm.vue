@@ -23,13 +23,10 @@
 </template>
 
 <script>
-import AppButton from "@/components/UI/AppButton";
-import AppInput from "@/components/UI/AppInput";
-import AppTextArea from "@/components/UI/AppTextArea";
 
 export default {
   name: "PostForm",
-  components: {AppTextArea, AppInput, AppButton},
+
   data() {
     return {
       form: {
