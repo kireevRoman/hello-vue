@@ -1,12 +1,22 @@
 <template>
-  <button class="app-button">
+  <button :class="['app-button', `app-button__${size}`, {'app-button__round': rounded}]">
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: "AppButton"
+  name: "AppButton",
+  props: {
+    size: {
+      type: String,
+      description: 'small | large'
+    },
+    rounded: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
@@ -32,5 +42,16 @@ export default {
     border: $secondaryColor;
     pointer-events: none;
   }
+}
+.app-button__small {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+.app-button__large {
+  padding: 24px 32px;
+  font-size: 24px;
+}
+.app-button__round {
+  border-radius: 80px;
 }
 </style>
