@@ -6,7 +6,9 @@
       <img src="@/assets/svg/remove.svg" alt="Иконка удаления поста">
     </button>
 
-    <img class="post-item__image" src="https://unsplash.it/800/800" alt="Превью статьи">
+    <img class="post-item__image"
+         src="https://unsplash.it/800/800"
+         alt="Превью статьи">
 
     <div class="post-item__content">
       <div class="post-item__title">

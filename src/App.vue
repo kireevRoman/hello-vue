@@ -14,8 +14,9 @@
         <app-button @click="dialogVisible = true">Добавить пост</app-button>
       </div>
 
-      <post-list :posts="getPosts"
+      <post-list v-if="!isLoadingPosts" :posts="getPosts"
                  @removePost="removePost"/>
+      <div v-else>Loading...</div>
     </div>
   </main>
 </template>
@@ -23,34 +24,37 @@
 <script>
 import PostForm from "@/components/PostForm";
 import PostList from "@/components/PostList";
+import {HTTP} from "@/api/http-config";
 
 export default {
   components: {PostList, PostForm},
+
   data() {
     return {
+      isLoadingPosts: false,
       search: '',
       dialogVisible: false,
-      posts: [
-        {
-          id: 1,
-          title: 'Заголовок статьи',
-          body: ' Текст статьи в несколько строк.  Текст статьи в несколько строк.  Текст статьи в несколько строк.'
-        },
-        {
-          id: 2,
-          title: 'Заголовок статьи 1',
-          body: ' Текст статьи в несколько строк.  Текст статьи в несколько строк.  Текст статьи в несколько строк.'
-        },
-        {
-          id: 3,
-          title: 'Заголовок статьи 2',
-          body: ' Текст статьи в несколько строк.  Текст статьи в несколько строк.  Текст статьи в несколько строк.'
-        },
-
-      ],
+      posts: [],
     }
   },
+
+  mounted() {
+    this.fetchPosts();
+  },
+
   methods: {
+    async fetchPosts() {
+      this.isLoadingPosts = true;
+      try {
+        const response = await HTTP.get('posts', {params: {limit: 10}});
+        this.posts = response.data.posts
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.isLoadingPosts = false;
+      }
+
+    },
     createPost(newPost) {
       this.posts.unshift(newPost);
       this.dialogVisible = false;
@@ -80,7 +84,7 @@ export default {
   border-radius: $defaultRadius;
   background: #FFFFFF;
 
-  &__search{
+  &__search {
     flex: 1;
     margin-right: 20px;
   }
