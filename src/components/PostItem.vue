@@ -77,7 +77,7 @@ export default {
   .post-item__image {
     height: 200px;
     object-fit: cover;
-    border-radius: 8px 8px 0 0;
+    border-radius: $defaultRadius $defaultRadius 0 0;
   }
 
   .post-item__content {

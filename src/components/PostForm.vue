@@ -2,26 +2,34 @@
   <form class="post-form" @submit.prevent="createPost">
     <h2>Создание поста</h2>
 
-    <input :value="form.title"
-           @input="form.title = $event.target.value"
-           type="text"
-           placeholder="Название поста"
-           required>
+    <app-input
+        v-model="form.title"
+        type="text"
+        placeholder="Название поста"
+        required/>
 
-    <textarea :value="form.body"
-              @input="form.body = $event.target.value"
-              placeholder="Описание поста"
-              rows="4"
-              required/>
+    <app-text-area
+        v-model="form.body"
+        placeholder="Описание поста"
+        rows="4"
+        required/>
 
-    <button type="submit">Создать пост</button>
+    <app-button
+        type="submit"
+        class="post-form__button">
+      Создать пост
+    </app-button>
   </form>
 </template>
 
 <script>
+import AppButton from "@/components/UI/AppButton";
+import AppInput from "@/components/UI/AppInput";
+import AppTextArea from "@/components/UI/AppTextArea";
+
 export default {
   name: "PostForm",
-
+  components: {AppTextArea, AppInput, AppButton},
   data() {
     return {
       form: {
@@ -51,6 +59,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/vars.scss';
+
 .post-form {
   display: flex;
   flex-direction: column;
@@ -60,22 +69,7 @@ export default {
 
   margin-bottom: 40px;
 
-  > input, > textarea {
-    padding: 10px 16px;
-    border: 1px solid $secondaryColor;
-    border-radius: $smallRadius;
-    color: $primaryColor;
-    font-size: 16px;
-  }
-
-  > button {
-    padding: 12px 24px;
-    border: 1px solid blueviolet;
-    color: #FFFFFF;
-    background: blueviolet;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: $smallRadius;
+  &__button {
     margin-left: auto;
   }
 
