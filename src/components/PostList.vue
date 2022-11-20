@@ -1,10 +1,12 @@
 <template>
   <div class="post-list">
     <template v-if="posts.length > 0">
-      <post-item v-for="post in posts"
-                 :key="`post-${post.id}`"
-                 :post="post"
-                 @removePost="$emit('removePost', $event)"/>
+      <transition-group name="list">
+        <post-item v-for="post in posts"
+                   :key="`post-${post.id}`"
+                   :post="post"
+                   @removePost="$emit('removePost', $event)"/>
+      </transition-group>
     </template>
 
     <app-empty v-else title="Посты не найдены или отсутствуют :("/>
