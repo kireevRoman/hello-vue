@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from "vue-router/dist/vue-router";
 import PostPage from "@/pages/PostPage";
 import AboutPage from "@/pages/AboutPage";
 import MainPage from "@/pages/MainPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 const routes = [
     {
@@ -18,6 +19,10 @@ const routes = [
         path: '/about',
         name: 'about',
         component: AboutPage
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: NotFoundPage
     }
 ]
 

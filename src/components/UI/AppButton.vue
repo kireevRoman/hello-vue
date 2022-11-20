@@ -48,7 +48,7 @@ export default {
   font-size: 14px;
 }
 .app-button__large {
-  padding: 24px 32px;
+  padding: 24px 48px;
   font-size: 24px;
 }
 .app-button__round {

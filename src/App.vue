@@ -18,5 +18,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/mixin.scss";
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  @include scroll;
 
+  > main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: auto;
+
+  }
+}
 </style>
