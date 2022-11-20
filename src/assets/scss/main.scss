@@ -8,6 +8,10 @@
   color: $primaryColor;
 }
 
+ul {
+  list-style: none;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
