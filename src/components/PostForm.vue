@@ -60,11 +60,6 @@ export default {
 .post-form {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  background: #FFFFFF;
-  border-radius: $defaultRadius;
-
-  margin-bottom: 40px;
 
   &__button {
     margin-left: auto;

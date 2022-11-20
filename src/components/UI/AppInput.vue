@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/vars.scss';
 .app-input {
-  padding: 10px 16px;
+  padding: 12px 16px;
   border: 1px solid $secondaryColor;
   border-radius: $smallRadius;
   color: $primaryColor;
