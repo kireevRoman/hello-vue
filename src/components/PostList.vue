@@ -1,18 +1,24 @@
 <template>
   <div class="post-list">
-    <post-item v-for="post in posts"
-               :key="`post-${post.id}`"
-               :post="post"
-               @removePost="$emit('removePost', $event)"/>
+    <template v-if="posts.length > 0">
+      <post-item v-for="post in posts"
+                 :key="`post-${post.id}`"
+                 :post="post"
+                 @removePost="$emit('removePost', $event)"/>
+    </template>
+
+    <app-empty v-else title="Посты не найдены или отсутствуют :("/>
+
   </div>
 </template>
 
 <script>
 import PostItem from "@/components/PostItem";
+import AppEmpty from "@/components/UI/AppEmpty";
 
 export default {
   name: "PostList",
-  components: {PostItem},
+  components: {AppEmpty, PostItem},
   props: {
     posts: {
       type: Array,
