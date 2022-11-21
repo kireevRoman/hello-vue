@@ -1,6 +1,10 @@
 <template>
   <div class="user">
-    <template v-if="user">
+    <div v-if="isLoading">Loading...</div>
+
+    <div v-else-if="errors">{{ errors }}</div>
+
+    <template v-else-if="user">
 
       <div class="user__card">
         <img class="user__card-image" :src="user.image" alt="аватарка пользователя">
@@ -54,40 +58,31 @@
 
     </template>
 
-    <div v-else>Loading...</div>
-
   </div>
-
 </template>
 
 <script>
-import {HTTP} from "@/api/http-config";
 import AppAccordion from "@/components/UI/AppAccordion";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "AboutPage",
   components: {AppAccordion},
-  data() {
-    return {
-      isLoading: false,
-      user: null
-    }
-  },
+
   mounted() {
     this.fetchUser()
   },
+
   methods: {
-    async fetchUser() {
-      this.isLoading = true;
-      try {
-        const response = await HTTP.get('users/99');
-        this.user = response.data;
-      } catch (e) {
-        console.log(e)
-      } finally {
-        this.isLoading = false;
-      }
-    },
+    ...mapActions("user", ["fetchUser"])
+  },
+
+  computed: {
+    ...mapState({
+      user: state => state.user.user,
+      isLoading: state => state.user.isLoading,
+      errors: state => state.user.errors,
+    })
   }
 }
 </script>

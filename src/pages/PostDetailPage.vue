@@ -1,6 +1,10 @@
 <template>
   <div class="post-detail">
-    <template v-if="post">
+    <div v-if="isLoadingPost">Loading...</div>
+
+    <div v-else-if="errors">{{ errors }}</div>
+
+    <template v-else-if="post">
       <div class="post-detail__header">
         <a class="post-detail__header-link" href="#" @click="$router.go(-1)">❬ Назад к постам</a>
       </div>
@@ -17,40 +21,31 @@
       </div>
     </template>
 
-    <div v-else>Loading...</div>
-
   </div>
 
 </template>
 
 <script>
-import {HTTP} from "@/api/http-config";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "PostDetailPage",
-  data() {
-    return {
-      isLoadingPost: false,
-      post: null
-    }
-  },
-  mounted() {
-    this.fetchPost()
-  },
-  methods: {
-    async fetchPost() {
-      const postId = this.$route.params.id
 
-      this.isLoadingPost = true;
-      try {
-        const response = await HTTP.get(`posts/${postId}`);
-        this.post = response.data;
-      } catch (e) {
-        console.log(e)
-      } finally {
-        this.isLoadingPost = false;
-      }
-    },
+  mounted() {
+    const postId = this.$route.params.id
+    this.fetchPost(postId)
+  },
+
+  methods: {
+    ...mapActions("postsDetail", ["fetchPost"])
+  },
+
+  computed: {
+    ...mapState({
+      post: state => state.postsDetail.post,
+      isLoadingPost: state => state.postsDetail.isLoadingPost,
+      errors: state => state.postsDetail.errors,
+    })
   }
 }
 </script>

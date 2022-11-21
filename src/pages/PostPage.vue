@@ -1,13 +1,14 @@
 <template>
   <div class="posts">
     <app-dialog v-model:active="dialogVisible">
-      <post-form @createPost="createPost"/>
+      <post-form @createPost="createPost($event); dialogVisible = false"/>
     </app-dialog>
 
     <div class="action-panel">
       <app-input class="action-panel__search"
                  type="search"
-                 v-model.trim="search"
+                 :model-value="search"
+                 @update:model-value="setSearch"
                  placeholder="Поиск по названию"/>
 
       <app-button @click="dialogVisible = true">Добавить пост</app-button>
@@ -33,25 +34,14 @@
 <script>
 import PostForm from "@/components/PostForm";
 import PostList from "@/components/PostList";
-import {HTTP} from "@/api/http-config";
+import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 
-
-const LIMIT = 30;
 export default {
   name: 'PostPage',
   components: {PostList, PostForm},
   data() {
     return {
-      isLoadingPosts: false,
-      isLoadingLoadMorePosts: false,
-      search: '',
       dialogVisible: false,
-      posts: [],
-      totalPosts: 0,
-      paramsQuery: {
-        limit: LIMIT,
-        skip: 0
-      }
     }
   },
 
@@ -60,44 +50,22 @@ export default {
   },
 
   methods: {
-    async fetchPosts() {
-      this.isLoadingPosts = true;
-      try {
-        const response = await HTTP.get('posts', {params: this.paramsQuery});
-        this.posts = [...this.posts, ...response.data.posts];
-        this.totalPosts = response.data.total;
-      } catch (e) {
-        console.log(e)
-      } finally {
-        this.isLoadingPosts = false;
-      }
-    },
-    async loadMorePosts() {
-      this.paramsQuery = {...this.paramsQuery, skip: this.paramsQuery.skip + LIMIT}
-      this.isLoadingLoadMorePosts = true;
-      try {
-        const response = await HTTP.get('posts', {params: this.paramsQuery});
-        this.posts = [...this.posts, ...response.data.posts];
-        this.totalPosts = response.data.total;
-      } catch (e) {
-        console.log(e)
-      } finally {
-        this.isLoadingLoadMorePosts = false;
-      }
-    },
-    createPost(newPost) {
-      this.posts.unshift(newPost);
-      this.dialogVisible = false;
-    },
-    removePost(postId) {
-      this.posts = this.posts.filter(post => post.id !== postId)
-    }
+    ...mapActions("posts", ["createPost", "fetchPosts", "removePost", "loadMorePosts"]),
+    ...mapMutations({
+      setSearch: "posts/setSearch",
+    }),
   },
 
   computed: {
-    getPosts() {
-      return this.posts.filter(post => post.title.toLowerCase().includes(this.search.toLowerCase()))
-    }
+    ...mapState({
+      isLoadingPosts: state => state.posts.isLoadingPosts,
+      isLoadingLoadMorePosts: state => state.posts.isLoadingLoadMorePosts,
+      search: state => state.posts.search,
+      totalPosts: state => state.posts.totalPosts,
+    }),
+    ...mapGetters({
+      getPosts: "posts/getPosts",
+    })
   }
 }
 </script>
