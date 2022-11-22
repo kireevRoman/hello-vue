@@ -6,6 +6,7 @@
         v-model="form.title"
         type="text"
         placeholder="Название поста"
+        set-focus
         required/>
 
     <app-text-area
@@ -35,6 +36,7 @@ export default {
       }
     }
   },
+
 
   methods: {
     createPost() {

@@ -1,5 +1,6 @@
 <template>
-  <input class="app-input"
+  <input ref='input'
+         class="app-input"
          :value="modelValue"
          @input="updateInput">
 </template>
@@ -8,7 +9,14 @@
 export default {
   name: "AppInput",
   props: {
-    modelValue: [String, Number]
+    modelValue: [String, Number],
+    setFocus: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted() {
+    this.setFocus && this.$refs.input.focus()
   },
   methods: {
     updateInput(event) {
@@ -20,6 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/vars.scss';
+
 .app-input {
   padding: 12px 16px;
   border: 1px solid $secondaryColor;
